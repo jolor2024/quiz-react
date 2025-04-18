@@ -1,4 +1,5 @@
 import './Quiz.css';
+import logo from './assets/logo.svg';
 import { useEffect, useState } from "react";
 
 export default function Quiz() {
@@ -49,21 +50,32 @@ export default function Quiz() {
     }
   }
 
-
   return (
-    <div>
-     <h1>Quiz</h1>
-
-     {questions[index] && (
-        <div>
-          <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
-          <button onClick={goToNext}>Next</button>
-          {
-            questions[index].answers.map((answer, index) => (
-            <h4 key={index}>{answer}</h4> 
-          ))}
-        </div>
-      )}
-    </div>
+    <>
+      <nav>
+          <a href="index.html">
+              <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#BA8DEC"><path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z"/></svg>
+          </a>
+      </nav>
+      <main>
+          <section className="question">
+              <div className="logo-icon">
+                <img src={logo}  alt="logo" />
+              </div>
+              
+              {questions[index] && (
+                <section className="answers">
+                  <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
+                  {
+                    questions[index].answers.map((answer, index) => (
+                    <h4 key={index} className="answer-btn">{answer}</h4> 
+                  ))}
+                  <button onClick={goToNext}>Next</button>
+                </section>
+              )}
+          <small style={{ textAlign: "center" }}>Question 1 of 10</small>
+          </section>
+      </main>
+  </>
   );
 }
