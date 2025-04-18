@@ -28,10 +28,14 @@ export default function SettingsPopup({ onClose }) {
             ))}
           </fieldset>
 
-          <fieldset className="form-control difficulty-options">
+          <fieldset className="form-control difficulty-options" id={styles.difficulty}>
             <legend>Difficulty</legend>
-
-            {["any", "easy", "medium", "hard"].map((level) => (
+            {[
+              { level: "Any", emoji: "🤷" },
+              { level: "Easy", emoji: "🤓" },
+              { level: "Medium", emoji: "🤔" },
+              { level: "Hard", emoji: "🤯" },
+            ].map(({ level, emoji }) =>
               <React.Fragment key={level}>
                 <input
                   type="radio"
@@ -41,10 +45,11 @@ export default function SettingsPopup({ onClose }) {
                   defaultChecked={level === "any"}
                 />
                 <label htmlFor={`difficulty-${level}`}>
-                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                    {emoji ? <div className={styles.emoji}>{emoji}</div> : null}
+                    {level.charAt(0).toUpperCase() + level.slice(1)}
                 </label>
               </React.Fragment>
-            ))}
+            )}
           </fieldset>
 
           <fieldset className="form-control answer-options">
