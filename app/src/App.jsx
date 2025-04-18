@@ -1,9 +1,12 @@
 import './App.css'
+import Quiz from './Quiz'
+import Start from './Start'
 
 function App() {
+  const path = window.location.pathname
   return (
     <>
-     <h1>Quiz app</h1>
+    {path === '/quiz' ? <Quiz  /> : <Start />}
     </>
   )
 }

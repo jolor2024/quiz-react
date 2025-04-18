@@ -1,0 +1,65 @@
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--big-padding);
+}
+
+fieldset {
+    border: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: var(--small-padding) 0;
+    gap: .75rem;
+}
+#difficulty {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+#amount {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+}
+#cats {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+h2.heading {
+    margin-bottom: calc(var(--big-padding) * 2);
+}
+
+input[type=radio] {
+    display: none;
+}
+input[type=radio] + label {
+    background-color: #8435DE;
+    padding: 1rem;
+    text-align: center;
+    border-radius: .2rem;
+    font-weight: bold;
+}
+input[type="radio"]:checked + label {
+    background-color: #fff;
+    color: black;
+}
+
+legend {
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: .1rem;
+}
+
+.emoji {
+    font-size: 5rem;
+}
+@media screen and (max-width: 420px) {
+    #cats input[type=radio] + label {
+        text-align: left;
+    }
+    #cats .emoji {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right:var(--big-padding);
+        font-size: 3rem;
+    }
+    #difficulty .emoji {
+        font-size: 3rem;
+    }
+}

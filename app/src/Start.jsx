@@ -1,0 +1,49 @@
+import './Start.css';
+
+import logo from './assets/logo.svg';
+import helpIcon from './assets/icon-help.svg';
+import settingsIcon from './assets/icon-settings.svg';
+import image from './assets/image.png';
+
+import { useState } from 'react';
+import HelpPopup from './components/HelpPopup';
+import SettingsPopup from './components/SettingsPopup';
+
+
+export default function Start() {
+    
+    const [showHelp, setShowHelp] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
+
+    return (
+        <>
+            <nav>
+                <a onClick={() => setShowHelp(true)} className="help">
+                    <img src={helpIcon} alt="" /> Help
+                </a>
+                <a onClick={() => setShowSettings(true)} className="settings">
+                    <img src={settingsIcon} alt="" /> Custom settings
+                </a>
+                {showHelp && <HelpPopup onClose={() => setShowHelp(false)} />}
+                {showSettings && <SettingsPopup onClose={() => setShowSettings(false)} />}
+            </nav>
+            <header>
+                <img src={logo} alt="Logo" />
+                <h1>QuickQuiz</h1>
+                <h2>The quickest way to quiz<br />at any given time and place!</h2>
+            </header>
+            <main>
+                <section>
+                    <a className="start-btn" href="/quiz">Start Quiz</a>
+                </section>
+                <img 
+                    src={image} 
+                    className="start-image" 
+                    alt="Vector illustration of three people playing quiz on a mobile phone" 
+                    title="Image by Icons8" 
+                />
+            </main>
+        </>
+    );
+
+}

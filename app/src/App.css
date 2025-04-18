@@ -1,4 +1,52 @@
-h1 {
-  font-size: 20px;
-  color: blue;
+@import url('https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap');
+
+:root {
+
+    --big-padding: 2rem;
+    --small-padding: 1rem;
+
+    @media screen and (max-width: 600px) {
+        --big-padding: 1rem;
+        --small-padding: .5rem;
+    }
+}
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    /* background-color: #2e0c4e; */
+    background-color: #111;
+    color: #fff;
+    font-family: 'national park', sans-serif;
+    font-size: 18px;
+}
+/* #bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -1;
+  opacity: .4;
+  mix-blend-mode: hard-light;
+  background: #001719 url(https://static.vecteezy.com/system/resources/previews/003/480/780/non_2x/abstract-technology-background-and-big-data-visualisation-illustration-free-vector.jpg) no-repeat;
+  background-size: 100% 50%;
+  background-position: center bottom -4rem;
+} */
+#root {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: relative;
+    min-height: calc(100vh - 2rem);
+    margin: 0 auto;
+    padding: var(--small-padding);
+}
+img {
+    max-width: 100%;
+}
+h1, h2, h3 {
+    text-align: center;
 }
