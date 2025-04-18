@@ -14,7 +14,7 @@
     padding: var(--big-padding);
     border-radius: 1.2rem;
     width: 90%;
-    max-width: 600px;
+    max-width: 900px;
     position: relative;
 }
 .popup h2 {
@@ -25,6 +25,7 @@
 }
 .popup#help {
     text-align: center;
+    max-width: 600px;
 }
 .close-btn {
     width: 100%;
@@ -36,4 +37,3 @@
     line-height: 1rem;
     cursor: pointer;
 }
-  

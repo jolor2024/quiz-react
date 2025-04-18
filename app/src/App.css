@@ -2,8 +2,8 @@
 
 :root {
 
-    --big-padding: 2rem;
-    --small-padding: 1rem;
+    --big-padding: 2.5rem;
+    --small-padding: 1.5rem;
 
     @media screen and (max-width: 600px) {
         --big-padding: 1rem;
