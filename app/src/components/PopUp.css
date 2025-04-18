@@ -1,0 +1,39 @@
+.popup-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,.8);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    z-index: 100;
+    overflow: auto;
+    padding: 5vh 0;
+} 
+.popup {
+    background: #460776;
+    padding: var(--big-padding);
+    border-radius: 1.2rem;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+.popup h2 {
+    margin-bottom: 2rem;
+}
+.popup p {
+    padding-bottom: 2rem;
+}
+.popup#help {
+    text-align: center;
+}
+.close-btn {
+    width: 100%;
+    text-align: right;
+    color: inherit;
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    line-height: 1rem;
+    cursor: pointer;
+}
+  

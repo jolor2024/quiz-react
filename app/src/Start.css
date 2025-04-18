@@ -1,7 +1,7 @@
 
 nav {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 500px));
+    grid-template-columns: 1fr 1fr;
     justify-content: space-between;
 }
 
@@ -35,38 +35,34 @@ main, section {
     align-self: center;
 }
 
-details img {
+.help,
+.settings {
+    color: #BA8DEC;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+.settings {
+    justify-self: flex-end;
+}
+.help img,
+.settings img {
     width: 24px;
     aspect-ratio: 1;
 }
-details:hover {
-    cursor: pointer;
+@media (hover:hover) {
+    .help:hover,
+    .settings:hover {
+        cursor: pointer;
+    }
 }
-summary {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    color: #BA8DEC;
-}
-details.settings {
-    text-align: right;
-}
-details.settings summary {
-    justify-content: right;
-}
-summary::marker { 
-    display: none;
-}
-::details-content {
-    cursor: default;
-}
+
 .start-info {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: .5rem;
     padding-top: var(--small-padding);
 }
-
 .start-image {
     align-self: center;
 }
