@@ -59,8 +59,8 @@ export default function Quiz() {
           <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
           <button onClick={goToNext}>Next</button>
           {
-            questions[index].answers.map((answer, i) => (
-            <h4 key={i}>{answer}</h4> 
+            questions[index].answers.map((answer, index) => (
+            <h4 key={index}>{answer}</h4> 
           ))}
         </div>
       )}
