@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 export default function Quiz() {
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
+  const [quizFinished, setQuizFinished] = useState(false);
+
+  const[answerSelected, setAnswerSelected] = useState([]);
+  const[score, setScore] = useState([0]);
 
   const [amount, setAmount] = useState(10);
   const [category, setCategory] = useState(10);
@@ -42,13 +46,35 @@ export default function Quiz() {
   }, []); 
 
 
-  function goToNext() {
+  useEffect(() => {
+    if(quizFinished) {
+      checkAnswers();
+    }
+  }, [quizFinished]);
+
+  function goToNext(answer) {
+    setAnswerSelected(prev => [...prev, answer]);
     if(index < questions.length - 1) {
       setIndex(index + 1)
     } else {
-      alert("Quiz finished")
+      setQuizFinished(true);
     }
   }
+
+  function checkAnswers() {
+    const correct = questions.map(q => q.correct_answer);
+    console.log("correct: ", correct);
+    console.log("Selected Answers:", answerSelected);
+    let score = 0;
+    for(let i = 0; i < correct.length; i++) {
+      if(correct[i] == answerSelected[i]) {
+        score++;
+      }
+    } 
+
+    setScore(score);
+  }
+
 
   return (
     <>
@@ -65,15 +91,23 @@ export default function Quiz() {
               
               {questions[index] && (
                 <section className="answers">
-                  <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
-                  {
-                    questions[index].answers.map((answer, index) => (
-                    <h4 key={index} className="answer-btn">{answer}</h4> 
-                  ))}
-                  <button onClick={goToNext}>Next</button>
+                  {quizFinished ?
+                    <>
+                      <h2>You got {score} out of {amount} questions correct!</h2>
+                    </> : 
+                    <>
+                    <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
+                    {
+                      questions[index].answers.map((answer, index) => (
+                      <button key={index} onClick={() => goToNext(answer)} className="answer-btn">{answer}</button>
+                    ))}
+                    </>
+                  }
                 </section>
               )}
-          <small style={{ textAlign: "center" }}>Question 1 of 10</small>
+            {!quizFinished && (
+               <small style={{ textAlign: "center" }}>Question {index+1} of {amount}</small>
+            )}
           </section>
       </main>
   </>
