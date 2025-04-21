@@ -3,6 +3,7 @@
     padding: 0 var(--big-padding) var(--big-padding);
     border-radius: 1rem;
     margin-top: 2rem;
+    width: 90%;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -45,4 +46,35 @@
     color: #fff;
     cursor: pointer;
     /* align-self: center; */
+}
+
+.correct {
+    background-color: #2ECC71;
+    color: #002400;
+}
+
+.incorrect {
+    background-color: #FF6B6B;
+    color: #240000;
+}
+  
+.restart-btn {
+    padding: 1rem 2rem;
+    border: none;
+    background: #460776;
+    border-radius: .5rem;
+    font: inherit;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    grid-column: span 2;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+}
+.restart-btn img {
+    height: 32px;
+    aspect-ratio: 1;
 }

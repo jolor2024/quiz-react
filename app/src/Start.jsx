@@ -15,6 +15,15 @@ export default function Start() {
     const [showHelp, setShowHelp] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
 
+    const [settings, setSettings] = useState({
+        amount: 10,
+        difficulty: 'any',
+        type: 'any',
+        category: 'any',
+    });
+
+    console.log({settings});
+
     return (
         <>
             <nav>
@@ -25,7 +34,12 @@ export default function Start() {
                     <img src={settingsIcon} alt="" /> Custom settings
                 </a>
                 {showHelp && <HelpPopup onClose={() => setShowHelp(false)} />}
-                {showSettings && <SettingsPopup onClose={() => setShowSettings(false)} />}
+                {showSettings && 
+                    <SettingsPopup 
+                        onClose={() => setShowSettings(false)} 
+                        onSave={(newSettings) => setSettings(newSettings)} 
+                    />
+                }
             </nav>
             <header>
                 <img src={logo} alt="Logo" />
@@ -34,7 +48,12 @@ export default function Start() {
             </header>
             <main>
                 <section>
-                    <a className="start-btn" href="/quiz">Start Quiz</a>
+                    <a 
+                        className="start-btn" 
+                        href={`/quiz?amount=${settings.amount}&difficulty=${settings.difficulty}&type=${settings.type}&category=${settings.category}`}
+                    >
+                    Start Quiz
+                    </a>
                 </section>
                 <img 
                     src={image} 

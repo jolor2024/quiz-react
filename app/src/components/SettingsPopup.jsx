@@ -2,14 +2,28 @@ import './Popup.css';
 import styles from './SettingsPopup.module.css';
 import React from 'react';
 
-export default function SettingsPopup({ onClose }) {
+export default function SettingsPopup({ onClose, onSave }) {
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const settings = {
+      amount: formData.get('trivia_amount'),
+      difficulty: formData.get('trivia_difficulty'),
+      type: formData.get('trivia_type'),
+      category: formData.get('trivia_category'),
+    };
+    onSave(settings);
+    onClose();
+  }
+
   return (
     <div className="popup-backdrop" onClick={onClose}>
       <div className="popup" id="settings" onClick={e => e.stopPropagation()}>
         <button className="close-btn" onClick={onClose}>×</button>
 
         <h2 className={styles.heading}>Custom settings</h2>
-        <form action="" method="post">
+        <form onSubmit={handleSubmit}>
 
           <fieldset className="form-control amount-options" id={styles.amount}>
             <legend>Number of Questions</legend>
@@ -31,17 +45,17 @@ export default function SettingsPopup({ onClose }) {
           <fieldset className="form-control difficulty-options" id={styles.difficulty}>
             <legend>Difficulty</legend>
             {[
-              { level: "Any", emoji: "🤷" },
-              { level: "Easy", emoji: "🤓" },
-              { level: "Medium", emoji: "🤔" },
-              { level: "Hard", emoji: "🤯" },
+              { level: "any", emoji: "🤷" },
+              { level: "easy", emoji: "🤓" },
+              { level: "medium", emoji: "🤔" },
+              { level: "hard", emoji: "🤯" },
             ].map(({ level, emoji }) =>
               <React.Fragment key={level}>
                 <input
                   type="radio"
                   id={`difficulty-${level}`}
                   name="trivia_difficulty"
-                  value={level}
+                  value={level.toLowerCase()}
                   defaultChecked={level === "any"}
                 />
                 <label htmlFor={`difficulty-${level}`}>
@@ -77,7 +91,7 @@ export default function SettingsPopup({ onClose }) {
             <legend>Category</legend>
 
             {[
-              { value: "any", label: "Any Category", emoji: "🤷" },
+              { value: "any", label: "Any", emoji: "🤷" },
               { value: "9", label: "General Knowledge", emoji: "🎓" },
               { value: "10", label: "Books", emoji: "📚" },
               { value: "11", label: "Film", emoji: "🎬" },
@@ -119,11 +133,7 @@ export default function SettingsPopup({ onClose }) {
             ))}
           </fieldset>
 
-          <input
-            type="hidden"
-            name="token"
-            value="376aced3ae5529ba3d74ddd11aeff24f06a5a1fbcf0508ef9e294a7e640bb4b8"
-          />
+          <button type="submit" className={styles.save}>Save Settings</button>
         </form>
       </div>
     </div>

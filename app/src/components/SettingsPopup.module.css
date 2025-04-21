@@ -63,3 +63,15 @@ legend {
         font-size: 3rem;
     }
 }
+
+.save {
+    padding: 1rem 2rem;
+    border: none;
+    background: #fff;
+    border-radius: .5rem;
+    font: inherit;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+}
