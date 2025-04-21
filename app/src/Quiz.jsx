@@ -1,6 +1,7 @@
 import './Quiz.css';
 import logo from './assets/logo.svg';
 import restartIcon from './assets/icon-restart.svg';
+import arrowLeftIcon from './assets/icon-arrow-left.svg';
 import { useEffect, useState } from "react";
 
 export default function Quiz() {
@@ -99,10 +100,8 @@ export default function Quiz() {
   return (
     <>
       <nav>
-        <a href="index.html">
-          <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#BA8DEC">
-            <path d="m287-446.67 240 240L480-160 160-480l320-320 47 46.67-240 240h513v66.66H287Z"/>
-          </svg>
+        <a href="/">
+          <img src={arrowLeftIcon} alt="Go back" />
         </a>
       </nav>
       <main>

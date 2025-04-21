@@ -21,11 +21,11 @@
     font-size: 1.2em;
 }
 .answers {
-    margin-top: 1rem;
+    margin: 3rem 0 2em;
     text-align: center;
 }
 .answers h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 @media screen and (min-width: 600px) {
     .answers {
@@ -45,6 +45,7 @@
     font-weight: bold;
     color: #fff;
     cursor: pointer;
+    border: 1px solid #1E0C3B;
     /* align-self: center; */
 }
 
@@ -61,7 +62,7 @@
 .restart-btn {
     padding: 1rem 2rem;
     border: none;
-    background: #460776;
+    background: #3C0E70;
     border-radius: .5rem;
     font: inherit;
     font-weight: bold;

@@ -10,11 +10,11 @@
     padding: 5vh 0;
 } 
 .popup {
-    background: #460776;
+    background: #3C0E70;
     padding: var(--big-padding);
     border-radius: 1.2rem;
     width: 90%;
-    max-width: 600px;
+    max-width: 650px;
     position: relative;
 }
 .popup h2 {
