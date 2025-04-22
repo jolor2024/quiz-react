@@ -79,3 +79,7 @@
     height: 32px;
     aspect-ratio: 1;
 }
+
+.error-message .restart-btn {
+    margin-top: 1.5rem;
+}

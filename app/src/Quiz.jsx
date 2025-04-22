@@ -5,6 +5,8 @@ import arrowLeftIcon from './assets/icon-arrow-left.svg';
 import { useEffect, useState } from "react";
 
 export default function Quiz() {
+  const [loading, setLoading] = useState(true);
+
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
@@ -15,7 +17,7 @@ export default function Quiz() {
   const [amount, setAmount] = useState(10);
   const [category, setCategory] = useState('any');
   const [difficulty, setDifficulty] = useState('any');
-  const [type, setType] = useState('any'); // 👈 Glöm inte type
+  const [type, setType] = useState('any');
 
   function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
@@ -45,7 +47,15 @@ export default function Quiz() {
     }
 
     fetch(apiUrl)
-      .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 429) {
+        throw new Error(`Too many requests`);
+      }
+      if (!response.ok) {
+        throw new Error(`Error fetching quiz: ${response.statusText}`);
+      }
+      return response.json();
+    })
       .then((data) => {
         const formattedQuestions = data.results?.map((question) => {
           const allAnswers = shuffleArray([
@@ -58,8 +68,12 @@ export default function Quiz() {
           };
         });
         setQuestions(formattedQuestions);
+        setLoading(false);
       })
-      .catch((error) => console.error('Error fetching quiz:', error));
+      .catch((error) => {
+        console.error('Error fetching quiz:', error);
+        setLoading(false);
+      });
   }, []);
 
   function handleAnswerClick(answer) {
@@ -110,52 +124,76 @@ export default function Quiz() {
             <img src={logo} alt="logo" />
           </div>
 
-          {questions?.[index] && (
-            <section className="answers">
-              {quizFinished ? (
-                <>
-                  <h2>You got {score} out of {amount} questions correct!</h2>
-                  <a 
-                    href={window.location.href} // Länka till samma URL
-                    className="restart-btn"
-                  >
-                    <img src={restartIcon} alt="" />
-                    Play again
-                </a>
-              </>
-              ) : (
-                <>
-                  <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
-                  {questions[index].answers.map((answer, i) => {
-                    let className = "answer-btn";
-
-                    if (selectedAnswer !== null) {
-                      if (answer === questions[index].correct_answer) {
-                        className += " correct";
-                      } else if (answer === selectedAnswer) {
-                        className += " incorrect";
-                      }
-                    }
-
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => handleAnswerClick(answer)}
-                        className={className}
-                        dangerouslySetInnerHTML={{ __html: answer }}
-                        disabled={selectedAnswer !== null}
-                      />
-                    );
-                  })}
-                </>
-              )}
+          {loading ? (
+            <section className="answers loading-message">
+              <h2>Loading quiz...</h2>
+              <p>Please wait while we fetch the questions.</p>
             </section>
-          )}
+          ) : questions.length === 0 ? (
+            <section className="answers error-message">
+              <h2>Oops! Something went wrong</h2>
+              <p>Scenario 1:
+                No questions could be loaded. This could be due to the API receiving too many requests. Try waiting at <strong>least five seconds</strong> and then reload the page.
+              </p>
+              <p>Scenario 2: There aren't enough questions to be found according to your custom settings. Try going back to the start page and change the settings.</p>
+              <a href="" style={{ gridColumn:"span 1" }} className="restart-btn">
+                <img src={restartIcon} alt="" />
+                Reload
+              </a>
+              <a href="/" style={{ gridColumn:"span 1" }} className="restart-btn">
+                <img src={arrowLeftIcon} alt="" />
+                Go Back
+              </a>
+            </section>
+          ) : (
+            <>
+              <section className="answers">
+                {quizFinished ? (
+                  <>
+                    <h2>You got {score} out of {amount} questions correct!</h2>
+                    <a 
+                      href={window.location.href}
+                      className="restart-btn"
+                    >
+                      <img src={restartIcon} alt="" />
+                      Play again
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <h2 dangerouslySetInnerHTML={{ __html: questions[index].question }} />
+                    {questions[index].answers.map((answer, i) => {
+                      let className = "answer-btn";
 
-          {!quizFinished && (
-            <small style={{ textAlign: "center" }}>Question {index + 1} of {amount}</small>
-          )}
+                      if (selectedAnswer !== null) {
+                        if (answer === questions[index].correct_answer) {
+                          className += " correct";
+                        } else if (answer === selectedAnswer) {
+                          className += " incorrect";
+                        }
+                      }
 
+                      return (
+                        <button
+                          key={i}
+                          onClick={() => handleAnswerClick(answer)}
+                          className={className}
+                          dangerouslySetInnerHTML={{ __html: answer }}
+                          disabled={selectedAnswer !== null}
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </section>
+
+              {!quizFinished && (
+                <small style={{ textAlign: "center" }}>
+                  Question {index + 1} of {amount}
+                </small>
+              )}
+            </>
+          )}
         </section>
       </main>
     </>
