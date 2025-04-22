@@ -47,7 +47,7 @@ export default function Quiz() {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        const formattedQuestions = data.results.map((question) => {
+        const formattedQuestions = data.results?.map((question) => {
           const allAnswers = shuffleArray([
             question.correct_answer,
             ...question.incorrect_answers,
@@ -110,7 +110,7 @@ export default function Quiz() {
             <img src={logo} alt="logo" />
           </div>
 
-          {questions[index] && (
+          {questions?.[index] && (
             <section className="answers">
               {quizFinished ? (
                 <>
