@@ -33,6 +33,7 @@ main, section {
     color: #fff;
     cursor: pointer;
     align-self: center;
+    text-decoration: none;
 }
 
 .help,
