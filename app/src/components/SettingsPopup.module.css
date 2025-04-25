@@ -76,3 +76,9 @@ legend {
     cursor: pointer;
     text-decoration: none;
 }
+
+@media (hover:hover) {
+    label:hover {
+        cursor: pointer;
+    }
+}
