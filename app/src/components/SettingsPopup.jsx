@@ -1,6 +1,6 @@
 import './Popup.css';
 import styles from './SettingsPopup.module.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export default function SettingsPopup({ onClose, onSave }) {
   function handleSubmit(e) {
@@ -17,6 +17,61 @@ export default function SettingsPopup({ onClose, onSave }) {
     onClose();
   }
 
+  useEffect(() => {
+    function handleKeyDown(e) {
+      const focused = document.activeElement;
+
+      if (focused.tagName === "LABEL") {
+        const fieldset = focused.closest("fieldset");
+        if (!fieldset) return;
+
+        const labels = Array.from(fieldset.querySelectorAll("label"));
+        const index = labels.indexOf(focused);
+
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+          e.preventDefault();
+          const next = labels[(index + 1) % labels.length];
+          next.focus();
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+          e.preventDefault();
+          const prev = labels[(index - 1 + labels.length) % labels.length];
+          prev.focus();
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const inputId = focused.htmlFor;
+          const input = document.getElementById(inputId);
+          if (input) input.click();
+        }
+      } 
+      
+      else if (focused.tagName === "FIELDSET") {
+        const fieldsets = Array.from(document.querySelectorAll("fieldset[tabindex='0']"));
+        const index = fieldsets.indexOf(focused);
+
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (index < fieldsets.length - 1) {
+            fieldsets[index + 1].focus();
+          }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (index > 0) {
+            fieldsets[index - 1].focus();
+          }
+        } else if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const labels = focused.querySelectorAll("label");
+          if (labels.length > 0) {
+            labels[0].focus();
+          }
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <div className="popup-backdrop" onClick={onClose}>
       <div className="popup" id="settings" onClick={e => e.stopPropagation()}>
@@ -25,7 +80,7 @@ export default function SettingsPopup({ onClose, onSave }) {
         <h2 className={styles.heading}>Custom settings</h2>
         <form onSubmit={handleSubmit}>
 
-          <fieldset className="form-control amount-options" id={styles.amount}>
+          <fieldset className="form-control amount-options" id={styles.amount} tabIndex="0">
             <legend>Number of Questions</legend>
 
             {[10, 20, 30, 40, 50].map((val) => (
@@ -37,12 +92,12 @@ export default function SettingsPopup({ onClose, onSave }) {
                   value={val}
                   defaultChecked={val === 10}
                 />
-                <label htmlFor={`amount-${val}`}>{val}</label>
+                <label htmlFor={`amount-${val}`} tabIndex="-1">{val}</label>
               </React.Fragment>
             ))}
           </fieldset>
 
-          <fieldset className="form-control difficulty-options" id={styles.difficulty}>
+          <fieldset className="form-control difficulty-options" id={styles.difficulty} tabIndex="0">
             <legend>Difficulty</legend>
             {[
               { level: "any", emoji: "🤷" },
@@ -58,7 +113,7 @@ export default function SettingsPopup({ onClose, onSave }) {
                   value={level.toLowerCase()}
                   defaultChecked={level === "any"}
                 />
-                <label htmlFor={`difficulty-${level}`}>
+                <label htmlFor={`difficulty-${level}`} tabIndex="-1">
                     {emoji ? <div className={styles.emoji}>{emoji}</div> : null}
                     {level.charAt(0).toUpperCase() + level.slice(1)}
                 </label>
@@ -66,7 +121,7 @@ export default function SettingsPopup({ onClose, onSave }) {
             )}
           </fieldset>
 
-          <fieldset className="form-control answer-options">
+          <fieldset className="form-control answer-options" tabIndex="0">
             <legend>Answer Type</legend>
 
             {[
@@ -82,12 +137,12 @@ export default function SettingsPopup({ onClose, onSave }) {
                   value={value}
                   defaultChecked={value === "any"}
                 />
-                <label htmlFor={`type-${value}`}>{label}</label>
+                <label htmlFor={`type-${value}`} tabIndex="-1">{label}</label>
               </React.Fragment>
             ))}
           </fieldset>
 
-          <fieldset id={styles.cats}>
+          <fieldset id={styles.cats} tabIndex="0">
             <legend>Category</legend>
 
             {[
@@ -125,7 +180,7 @@ export default function SettingsPopup({ onClose, onSave }) {
                   value={value}
                   defaultChecked={value === "any"}
                 />
-                <label htmlFor={`category-${value}`}>
+                <label htmlFor={`category-${value}`} tabIndex="-1">
                     {emoji ? <div className={styles.emoji}>{emoji}</div> : null}
                     {label}
                 </label>
