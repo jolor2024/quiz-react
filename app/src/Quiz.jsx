@@ -111,10 +111,31 @@ export default function Quiz() {
     }
   }, [quizFinished]);  
 
+  useEffect(() => {
+    function handleKeyDown(event) {
+      if (selectedAnswer !== null || quizFinished || loading || questions.length === 0) return;
+  
+      const key = event.key;
+      const currentQuestion = questions[index];
+      const currentAnswers = currentQuestion.answers;
+  
+      if (["1", "2", "3", "4"].includes(key)) {
+        const answerIndex = parseInt(key, 10) - 1;
+        if (currentAnswers[answerIndex]) {
+          handleAnswerClick(currentAnswers[answerIndex]);
+        }
+      }
+    }
+  
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedAnswer, quizFinished, loading, questions, index]);
+  
+
   return (
     <>
       <nav>
-        <a href="/">
+        <a className="back-link" href="/" tabIndex="0">
           <img src={arrowLeftIcon} alt="Go back" />
         </a>
       </nav>
@@ -136,11 +157,11 @@ export default function Quiz() {
                 No questions could be loaded. This could be due to the API receiving too many requests. Try waiting at <strong>least five seconds</strong> and then reload the page.
               </p>
               <p>Scenario 2: There aren't enough questions to be found according to your custom settings. Try going back to the start page and change the settings.</p>
-              <a href="" style={{ gridColumn:"span 1" }} className="restart-btn">
+              <a href="" style={{ gridColumn:"span 1" }} className="restart-btn" tabIndex="0">
                 <img src={restartIcon} alt="" />
                 Reload
               </a>
-              <a href="/" style={{ gridColumn:"span 1" }} className="restart-btn">
+              <a href="/" style={{ gridColumn:"span 1" }} className="restart-btn" tabIndex="0">
                 <img src={arrowLeftIcon} alt="" />
                 Go Back
               </a>
@@ -154,6 +175,7 @@ export default function Quiz() {
                     <a 
                       href={window.location.href}
                       className="restart-btn"
+                      tabIndex="0"
                     >
                       <img src={restartIcon} alt="" />
                       Play again

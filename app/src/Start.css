@@ -38,10 +38,14 @@ main, section {
 
 .help,
 .settings {
+    border: none;
+    background: transparent;
+    font: inherit;
     color: #BA8DEC;
     display: flex;
     align-items: center;
     gap: .75rem;
+    justify-self: flex-start;
 }
 .settings {
     justify-self: flex-end;

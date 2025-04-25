@@ -27,12 +27,12 @@ export default function Start() {
     return (
         <>
             <nav>
-                <a onClick={() => setShowHelp(true)} className="help">
+                <button onClick={() => setShowHelp(true)} className="help">
                     <img src={helpIcon} alt="" /> Help
-                </a>
-                <a onClick={() => setShowSettings(true)} className="settings">
+                </button>
+                <button onClick={() => setShowSettings(true)} className="settings">
                     <img src={settingsIcon} alt="" /> Custom settings
-                </a>
+                </button>
                 {showHelp && <HelpPopup onClose={() => setShowHelp(false)} />}
                 {showSettings && 
                     <SettingsPopup 
@@ -51,6 +51,7 @@ export default function Start() {
                     <a 
                         className="start-btn" 
                         href={`/quiz?amount=${settings.amount}&difficulty=${settings.difficulty}&type=${settings.type}&category=${settings.category}`}
+                        tabIndex="0"
                     >
                     Start Quiz
                     </a>

@@ -83,3 +83,7 @@
 .error-message .restart-btn {
     margin-top: 1.5rem;
 }
+
+.back-link {
+    justify-self: flex-start;
+}
